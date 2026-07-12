@@ -102,8 +102,8 @@ src/lib/
 | `svelte.config.js` | Tells SvelteKit to build for Cloudflare (`adapter-cloudflare`) |
 | `vite.config.ts` | Build config, incl. two custom plugins that shepherd Prisma's WebAssembly file through the build (see §7) |
 | `test/` | Vitest tests that run inside `workerd` (the real Workers runtime) |
-| `docs/` | Task-by-task design docs (BE-*/FE-*/OPS-*) |
-| `README.md` / `RUNNING.md` | Data-model docs / how-to-run instructions |
+| `docs/` | Task-by-task design docs (BE-*/FE-*/OPS-*) and guides, including this file |
+| `README.md` / `docs/RUNNING.md` | Data-model docs / how-to-run instructions |
 
 ---
 

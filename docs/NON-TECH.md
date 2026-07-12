@@ -53,9 +53,10 @@ These keep you safe and keep the project safe:
 ## 3. Pick a role
 
 Each role below lists **Plan A (no AI needed)** and **Plan B (AI-assisted)**
-work. Mix and match. The project's to-do list lives in the [docs/](docs/)
-folder as 52 tickets (BE = backend, FE = frontend, OPS = operations) — several
-are cited below so your work plugs into the real plan.
+work. Mix and match. The project's to-do list lives in this `docs/` folder as
+52 tickets (BE = backend, FE = frontend, OPS = operations; indexed in
+[README.md](README.md)) — several are cited below so your work plugs into the
+real plan.
 
 ---
 
@@ -90,9 +91,9 @@ this: **FE-016 "Perform accessibility and mobile web-view QA."**
 **Plan B — with an AI assistant:**
 
 - Ask the AI to **run the project on your computer** so you can test the
-  newest version: *"Open the project at [folder]. Read RUNNING.md and start
-  the app locally for me, including demo data. Tell me the address to open
-  and warn me about anything that didn't work."*
+  newest version: *"Open the project at [folder]. Read docs/RUNNING.md and
+  start the app locally for me, including demo data. Tell me the address to
+  open and warn me about anything that didn't work."*
 - Ask it to **generate test data**: *"Create 20 realistic fake package
   notifications covering edge cases — very long names, right-to-left
   languages, missing images — and submit them to my local app so the admin
@@ -203,8 +204,8 @@ judgment work.
 **Plan B — with an AI assistant:**
 
 - Ask the AI to **explain what the system can and can't enforce** before you
-  write policy: *"Read this project's BREAKDOWN.md and tell me, in plain
-  English: what package statuses exist, what transitions are allowed, and
+  write policy: *"Read this project's docs/SOURCE-CODE-BREAKDOWN.md and tell
+  me, in plain English: what package statuses exist, what transitions are allowed, and
   what gets recorded when an admin acts?"* (Answer: every status change is
   permanently logged with who did it — great for accountability policy.)
 - Have it **red-team your policy**: *"Here is our draft moderation policy.
@@ -256,8 +257,8 @@ someone tracking it more than it needs another coder.
 **Plan A — no AI:**
 
 - Build the **status board**: a spreadsheet or Trello with every ticket from
-  [docs/](docs/), its owner, status, and what it's waiting on. Update it by
-  asking humans, weekly.
+  this `docs/` folder, its owner, status, and what it's waiting on. Update it
+  by asking humans, weekly.
 - Run a **weekly 15-minute check-in**: what shipped, what's stuck, what's
   next. Publish three-bullet notes.
 - Own the **launch checklist**: collect what "done" means from each person
@@ -301,9 +302,10 @@ step) can help with all of them in under an hour:
    change the project's files, and run the app), or the chat inside an editor
    like VS Code.
 3. **Your first conversation** — literally start with:
-   > "I'm not a programmer. Read BREAKDOWN.md and RUNNING.md in this project
-   > and explain what this app does in plain English. Then help me run it
-   > locally so I can look at it. Warn me before you change any file."
+   > "I'm not a programmer. Read docs/SOURCE-CODE-BREAKDOWN.md and
+   > docs/RUNNING.md in this project and explain what this app does in plain
+   > English. Then help me run it locally so I can look at it. Warn me before
+   > you change any file."
 
 That last sentence — *"warn me before you change any file"* — is your
 seatbelt. Use it in every session until you're comfortable.

@@ -1,14 +1,15 @@
 # Agent Context — read this before working in this repo
 
-Handoff notes from a previous AI-assistant session (July 2026) so a future
-agent can pick up without re-deriving everything.
+Handoff notes so any agent can pick up work in this repository without
+re-deriving everything.
 
 ## Who you're working with
 
-- The users has **no Svelte/SvelteKit experience**,
-  limited TypeScript and client-side/SSR experience, and no Cloudflare or
-  Prisma background. Explain things in plain language, define jargon on first
-  use, and prefer complete beginner-friendly answers over terse expert ones.
+- Assume the people you work with may have **no Svelte/SvelteKit
+  experience**, limited TypeScript and client-side/SSR experience, and no
+  Cloudflare or Prisma background. Explain things in plain language, define
+  jargon on first use, and prefer complete beginner-friendly answers over
+  terse expert ones.
 - This project is also intended to be worked on by **non-technical
   collaborators using AI assistants** (see NON-TECH.md). Expect prompts from
   people with zero coding knowledge; follow the safety phrasebook in that
@@ -31,19 +32,17 @@ Data pipeline: Scriptoria notifies → package upserted as `PENDING` → admin
 moderates → `ACTIVE` packages become publicly visible. All status changes are
 recorded in an append-only `package_status_events` audit table.
 
-## Documents produced in that session (all in repo root)
+## Companion documents (all in `docs/`)
 
-- **BREAKDOWN.md** — full beginner-oriented codebase walkthrough: SvelteKit
-  conventions (`+page.svelte` / `+page.server.ts` / `+server.ts` / hooks),
-  directory tour, request-flow diagrams for the three main flows, per-file
-  summaries, Cloudflare & Prisma integration, and local-run/deploy steps.
-  Keep it updated if routes or lib files change materially.
+- **SOURCE-CODE-BREAKDOWN.md** — full beginner-oriented codebase walkthrough:
+  SvelteKit conventions (`+page.svelte` / `+page.server.ts` / `+server.ts` /
+  hooks), directory tour, request-flow diagrams for the three main flows,
+  per-file summaries, Cloudflare & Prisma integration, and local-run/deploy
+  steps. Keep it updated if routes or lib files change materially.
 - **NON-TECH.md** — role-based contribution guide for non-coders (tester,
   writer, language expert, policy, designer, coordinator), each with
   no-AI and AI-assisted plans, plus safety rules and prompt phrasebook.
 - **AGENT-CONTEXT.md** — this file.
-- The original request that drove BREAKDOWN.md is in
-  `understanding-prompt.md`.
 
 ## Key technical facts already verified (don't re-derive)
 
@@ -88,8 +87,8 @@ recorded in an append-only `package_status_events` audit table.
 - Local run: `npm install` → copy `.dev.vars.example` to `.dev.vars` →
   `npm run db:migrate:local` (+ optional `db:seed:local`) → `npm run dev`
   (http://localhost:5173). Checks: `npm run check`, `npm run deploy:dry-run`.
-- Related sibling repo: `appbuilder-container-faithtech` (without `-autoren`)
-  exists one directory up; this `-autoren` copy is the one being worked on.
+- A sibling copy of this repositorymay exist one
+  directory up. Confirm which copy you are working in before making changes.
 
 ## How to behave here
 
