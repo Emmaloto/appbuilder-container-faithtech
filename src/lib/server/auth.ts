@@ -16,36 +16,6 @@ const SESSION_COOKIE = "admin_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 8; // 8 hours
 const PBKDF2_ITERATIONS = 100_000;
 
-function bearerToken(header: string | undefined): string {
-  const match = /^Bearer\s+(.+)$/i.exec(header ?? "");
-  if (!match?.[1]) throw new AuthenticationError("Bearer token required");
-  return match[1];
-}
-
-/**
- * Constant-time verification of the shared Scriptoria notification credential.
- * Only a hash of the expected secret is compared, so timing does not leak the
- * length or contents of either value.
- */
-export async function verifySecret(
-  authorizationHeader: string | undefined,
-  expectedSecret: string,
-): Promise<void> {
-  if (!expectedSecret) {
-    throw new Error("SCRIPTORIA_API_KEY is not configured");
-  }
-  const provided = bearerToken(authorizationHeader);
-  const encoder = new TextEncoder();
-  const [providedHash, expectedHash] = await Promise.all([
-    crypto.subtle.digest("SHA-256", encoder.encode(provided)),
-    crypto.subtle.digest("SHA-256", encoder.encode(expectedSecret)),
-  ]);
-
-  if (!subtle.timingSafeEqual(providedHash, expectedHash)) {
-    throw new AuthenticationError("Invalid API credential");
-  }
-}
-
 // ---------------------------------------------------------------------------
 // Password hashing (PBKDF2 via Web Crypto — native on Workers; bcrypt/argon2
 // are not). Stored format: pbkdf2$<iterations>$<saltB64>$<hashB64>.
@@ -134,6 +104,38 @@ export async function authenticateAdministrator(
     throw new AuthenticationError("Invalid email or password");
   }
   return admin.id;
+}
+
+// ---------------------------------------------------------------------------
+// Scriptoria notification authentication. The publishing service (Scriptoria's
+// build engine, configured via PUBLISH_NOTIFY) sends the REST notification with
+// a shared secret in the `Authorization: Bearer <secret>` header. We compare it
+// to SCRIPTORIA_API_KEY in constant time. The secret lives only as a Worker
+// secret — never in the database, never displayed — so there is nothing to
+// leak from the admin UI. Verification fails closed when the secret is unset so
+// the intake endpoint can never be unauthenticated by accident.
+// ---------------------------------------------------------------------------
+
+const BEARER_PREFIX = "Bearer ";
+
+export async function verifyScriptoriaSecret(
+  authorizationHeader: string | null | undefined,
+  configuredSecret: string,
+): Promise<boolean> {
+  if (!configuredSecret) return false; // fail closed: unset secret authorizes nothing
+  if (!authorizationHeader || !authorizationHeader.startsWith(BEARER_PREFIX)) {
+    return false;
+  }
+  const encoder = new TextEncoder();
+  const provided = authorizationHeader.slice(BEARER_PREFIX.length);
+  // Hash both sides to fixed-length SHA-256 digests before comparing. The
+  // comparison is then constant-time regardless of input length and leaks
+  // nothing about the secret — not even its length.
+  const [providedDigest, expectedDigest] = await Promise.all([
+    crypto.subtle.digest("SHA-256", encoder.encode(provided)),
+    crypto.subtle.digest("SHA-256", encoder.encode(configuredSecret)),
+  ]);
+  return subtle.timingSafeEqual(providedDigest, expectedDigest);
 }
 
 // ---------------------------------------------------------------------------

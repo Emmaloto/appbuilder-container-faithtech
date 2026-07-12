@@ -2,8 +2,8 @@
 
 // Secrets are not declared in wrangler.jsonc, so they are added here.
 type WorkerBindings = Env & {
-  SCRIPTORIA_API_KEY: string;
   SESSION_SECRET: string;
+  SCRIPTORIA_API_KEY: string;
 };
 
 declare global {
