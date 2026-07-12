@@ -1,0 +1,3 @@
+# Local development only. Copy to .dev.vars and use non-production values.
+# Signs administrator session cookies; use a long random string.
+SESSION_SECRET=replace-with-a-local-development-session-secret
